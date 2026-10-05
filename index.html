@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family Budget Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <header class="hero">
+      <h1>💰 Family Budget Calculator</h1>
+      <p>Track your monthly income and expenses with ease</p>
+    </header>
+
+    <section class="stats">
+      <div class="stat income-stat">
+        <span class="stat-icon">💵</span>
+        <span class="stat-label">Income</span>
+        <span class="stat-value" id="totalIncome">PKR 0</span>
+      </div>
+      <div class="stat expense-stat">
+        <span class="stat-icon">🧾</span>
+        <span class="stat-label">Expenses</span>
+        <span class="stat-value" id="totalExpenses">PKR 0</span>
+      </div>
+      <div class="stat savings-stat" id="savingsCard">
+        <span class="stat-icon">🏦</span>
+        <span class="stat-label">Savings</span>
+        <span class="stat-value" id="savings">PKR 0</span>
+      </div>
+    </section>
+
+    <div class="layout">
+
+      <!-- LEFT COLUMN: inputs -->
+      <div class="col">
+
+        <section class="card month-card">
+          <label for="monthPicker">📅 Select Month</label>
+          <input type="month" id="monthPicker">
+        </section>
+
+        <section class="card">
+          <h3>💼 Monthly Income</h3>
+          <label for="income">Income for this month (PKR)</label>
+          <input type="number" id="income" placeholder="e.g. 80000" min="0">
+        </section>
+
+        <section class="card" id="formCard">
+          <h3 id="formTitle">➕ Add Expense</h3>
+
+          <label for="category">Category</label>
+          <select id="category"></select>
+
+          <div class="form-row">
+            <div>
+              <label for="amount">Amount (PKR)</label>
+              <input type="number" id="amount" placeholder="e.g. 25000" min="0">
+            </div>
+            <div>
+              <label for="expenseDate">Date</label>
+              <input type="date" id="expenseDate">
+            </div>
+          </div>
+
+          <label for="note">Note (optional)</label>
+          <input type="text" id="note" placeholder="e.g. October electricity bill" maxlength="60">
+
+          <div class="btn-row">
+            <button id="addBtn" class="primary">Add Expense</button>
+            <button id="cancelBtn" class="secondary hidden">Cancel</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3>🎯 Category Budget Limits</h3>
+          <p class="hint">Set a monthly limit for a category. You will get an alert when you cross it. Limits apply to every month.</p>
+
+          <div class="form-row">
+            <div>
+              <label for="budgetCategory">Category</label>
+              <select id="budgetCategory"></select>
+            </div>
+            <div>
+              <label for="budgetLimit">Monthly Limit (PKR)</label>
+              <input type="number" id="budgetLimit" placeholder="e.g. 20000" min="0">
+            </div>
+          </div>
+
+          <button id="setBudgetBtn" class="primary">Set Limit</button>
+
+          <div id="budgetList"></div>
+          <p id="budgetEmpty" class="empty">No limits set yet.</p>
+        </section>
+
+      </div>
+
+      <!-- RIGHT COLUMN: results -->
+      <div class="col">
+
+        <section class="card">
+          <div class="progress-header">
+            <span>Budget Used</span>
+            <span id="usedPercent">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <p id="warning" class="warning hidden">⚠️ Over budget! Your expenses are higher than your income.</p>
+        </section>
+
+        <section class="card">
+          <h3>📊 Expenses Chart</h3>
+          <div class="chart-box">
+            <canvas id="pieChart"></canvas>
+          </div>
+          <p id="chartMsg" class="empty">Add your income and expenses to see the chart.</p>
+        </section>
+
+        <section class="card">
+          <h3>📋 Expenses List</h3>
+          <ul id="expenseList"></ul>
+          <p id="emptyMsg" class="empty">No expenses added for this month.</p>
+          <button id="clearBtn" class="danger">🗑️ Clear This Month</button>
+        </section>
+
+        <section class="card">
+          <h3>💾 Export &amp; Backup</h3>
+          <p class="hint">Download this month's expenses as a CSV file (opens in Excel), or back up all your data and restore it later.</p>
+          <div class="data-actions">
+            <button id="exportCsvBtn" class="secondary">📄 Export Month (CSV)</button>
+            <button id="exportJsonBtn" class="secondary">⬇️ Backup All Data</button>
+            <button id="importBtn" class="secondary">⬆️ Restore Backup</button>
+            <input type="file" id="importFile" accept=".json,application/json" class="hidden">
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <footer class="footer">Made with ❤️ for the family</footer>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
